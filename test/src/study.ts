@@ -14,3 +14,18 @@ console.log(detail)
 let part1 = {name: 'jane'},  part2 = {age: '22'},  part3 = {city: 'seoul', country: 'kr'}
 let merged = {...part1, ...part2, ...part3}
 console.log(merged)
+
+
+
+
+interface INameable {
+    name: string
+}
+
+let person: object = {name: "jack"};
+// person.name 
+// 위의 문법 오류 person의 타입이 object인데 object타입은 name속성을 가지지 않기 때문
+// 아래와 같이 type casting 해주거나 인터페이스를 만들어 해결
+(<{name: string}>person).name 
+
+let name2 = (<INameable>person).name
