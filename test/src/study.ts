@@ -29,3 +29,47 @@ let person: object = {name: "jack"};
 (<{name: string}>person).name 
 
 let name2 = (<INameable>person).name
+
+
+//타입스크립트에서의 함수 선언
+function add(num1: number, num2: number): number {
+    return num1 + num2;
+}
+
+//함수 시그니처 잘못된 매개변수나 반환타입으로 함수를 만드는것을 미연에 방지
+let printMe: (string, number) => void = function (name: string, age: number): void {}
+
+// type키워드로 타입 별칭
+type stringNumberFunc = (string, number) => void
+
+let f: stringNumberFunc = function(name: string, age: number): void {}
+
+
+//undefined 관련 주의사항
+//undefined 타입은 타입계층도에서 모든 타입 중 최하위 타입이다.
+//그렇기에 getName()함수의 매개변수에 undefined를 넣어도 
+//INameable을 상속하는 자식 타입으로 간주하기 때문에 구문 오류가 발생하지 않음
+interface INameable {
+    name: string
+}
+
+function getName(o: INameable) {
+    return o != undefined ? o.name : 'unknown name'
+}
+
+let n = getName(undefined)
+console.log(n)
+console.log(getName({name:'jack'}))
+
+//만일 인터페이스에 선택 속성이 있다면 다음과 같이 구현
+interface IAgeable {
+    age?: number
+}
+
+function getAge(o: IAgeable) {
+    return o?.age ?? 0
+}
+
+console.log(getAge(undefined))
+console.log(getAge(null))
+console.log(getAge({age:32}))
