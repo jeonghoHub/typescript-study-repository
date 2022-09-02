@@ -66,10 +66,20 @@ interface IAgeable {
     age?: number
 }
 
-function getAge(o: IAgeable) {
+function getAge(o: IAgeable): any {
     return o?.age ?? 0
 }
 
 console.log(getAge(undefined))
 console.log(getAge(null))
 console.log(getAge({age:32}))
+
+type keyValue = {
+    [key: string]: string
+}
+
+const test = (key: string, value: string): keyValue => ({[key]: value})
+
+console.log(test('aaa', 'aaa'))
+
+
